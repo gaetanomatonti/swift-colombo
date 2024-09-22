@@ -14,9 +14,9 @@ public struct CoordinatedView<C>: View where C: FlowCoordinator {
     @Bindable var coordinator = coordinator
 
     NavigationStack(path: $coordinator.path) {
-      coordinator.destination(for: coordinator.root)
+      coordinator.router.destination(for: coordinator.root)
         .navigationDestination(for: C.Route.self) { route in
-          coordinator.destination(for: route)
+          coordinator.router.destination(for: route)
         }
     }
     .environment(coordinator)

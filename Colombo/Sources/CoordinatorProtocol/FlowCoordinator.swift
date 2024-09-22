@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A protocol that defines requirements for an object that coordinates flow navigation.
 public protocol FlowCoordinator: PresentableCoordinator {
-  associatedtype Destination: View
+  associatedtype FlowRouter: Router
 
   typealias Route = Screen.ID
 
@@ -12,15 +12,13 @@ public protocol FlowCoordinator: PresentableCoordinator {
   /// The path of the navigation stack. Use this property as a binding for the `NavigationStack`.
   var path: NavigationPath { get set }
 
+  var router: FlowRouter { get }
+
   func push(_ route: Route)
 
   func pop()
 
   func popToRoot()
-
-  #warning("Move the logic of this function inside CoordinatedView, or in a Router protocol. This way we can make the Coordinator protocol a class and have more control over the implementation of the methods.")
-  @ViewBuilder
-  func destination(for route: Route) -> Destination
 }
 
 public extension FlowCoordinator {
@@ -39,14 +37,3 @@ public extension FlowCoordinator {
     path.removeLast(path.count)
   }
 }
-
-/*
- protocol Router {
-   associatedtype Destination: View
-
-   associatedtype Route: Hashable
-
-   @ViewBuilder
-   func destination(for route: Route) -> Destination
- }
- */

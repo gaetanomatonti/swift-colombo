@@ -30,25 +30,3 @@ struct RegistrationPersonalData: View, Screen {
     Text("Personal Data")
   }
 }
-
-@Observable
-final class RegistrationCoordinator: FlowCoordinator {
-  let root = RegistrationEntry.id
-
-  var path = NavigationPath()
-
-  var presentation: Presentation? = nil
-
-  func destination(for route: Route) -> some View {
-    switch route {
-    case RegistrationEntry.id:
-      RegistrationEntry()
-
-    case RegistrationPersonalData.id:
-      RegistrationPersonalData()
-
-    default:
-      EmptyView()
-    }
-  }
-}

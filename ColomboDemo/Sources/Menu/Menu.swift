@@ -28,25 +28,3 @@ struct MenuSupport: View, Screen {
     Text("Support")
   }
 }
-
-@Observable
-final class MenuCoordinator: FlowCoordinator {
-  let root = MenuHome.id
-
-  var path = NavigationPath()
-
-  var presentation: Presentation? = nil
-
-  func destination(for route: Route) -> some View {
-    switch route {
-    case MenuHome.id:
-      MenuHome()
-
-    case MenuSupport.id:
-      MenuSupport()
-
-    default:
-      EmptyView()
-    }
-  }
-}
