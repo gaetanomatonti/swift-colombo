@@ -2,7 +2,7 @@ import Colombo
 import SwiftUI
 
 struct ServicesHome: View {
-  @Environment(ServicesCoordinator.self) var coordinator
+  @CoordinatorObject(ServicesCoordinator.self) var coordinator
 
   var body: some View {
     Button("Registration") {

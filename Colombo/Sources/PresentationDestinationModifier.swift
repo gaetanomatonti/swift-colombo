@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A view modifier that controls the presentation of a coordinator.
-struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinator>: ViewModifier where PresentedCoordinator: FlowCoordinator, PresentingCoordinator: PresentableCoordinator {
+struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinator, R>: ViewModifier where R: Router, PresentedCoordinator: FlowCoordinator<R>, PresentingCoordinator: PresentableCoordinator {
 
   // MARK: - Computed Property
 
@@ -26,12 +26,12 @@ struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinat
         .sheet(item: $presentingCoordinator.presentation.sheet) {
           presentingCoordinator.dismiss(presentedCoordinator)
         } content: { item in
-          CoordinatedView<PresentedCoordinator>()
+          CoordinatedView<PresentedCoordinator, R>()
         }
         .fullScreenCover(item: $presentingCoordinator.presentation.fullScreenCover) {
           presentingCoordinator.dismiss(presentedCoordinator)
         } content: { item in
-          CoordinatedView<PresentedCoordinator>()
+          CoordinatedView<PresentedCoordinator, R>()
         }
     } else {
       content

@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct CoordinatedView<C>: View where C: FlowCoordinator {
+public struct CoordinatedView<C, R>: View where R: Router, C: FlowCoordinator<R> {
 
   @CoordinatorObject(C.self) var coordinator
 

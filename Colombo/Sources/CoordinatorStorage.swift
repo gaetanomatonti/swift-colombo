@@ -5,6 +5,8 @@ final class CoordinatorStorage {
   private(set) var coordinators: [ObjectIdentifier: Any] = [:]
 
   func add<C>(_ coordinator: C) where C: Coordinator {
+    assert(_coordinator(C.self) == nil)
+
     coordinators[C.id] = coordinator
   }
 
@@ -17,23 +19,18 @@ final class CoordinatorStorage {
   }
 
   func coordinator<C>(_ key: C.Type) -> C where C: Coordinator {
-    guard let coordinator = coordinators[C.id] as? C else {
+    guard let coordinator = _coordinator(key) else {
       fatalError("Coordinator not found for \(key)")
     }
 
     return coordinator
   }
+
+  private func _coordinator<C>(_ key: C.Type) -> C? where C: Coordinator {
+    coordinators[C.id] as? C
+  }
 }
 
 extension CoordinatorStorage {
   static let shared = CoordinatorStorage()
-}
-
-@propertyWrapper
-struct CoordinatorObject<Value> where Value: Coordinator {
-  let wrappedValue: Value
-
-  init(_ value: Value.Type) {
-    wrappedValue = CoordinatorStorage.shared.coordinator(value)
-  }
 }

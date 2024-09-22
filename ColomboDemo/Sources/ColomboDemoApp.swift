@@ -3,7 +3,7 @@ import SwiftUI
 
 @main
 struct ColomboDemoApp: App {
-  @State private var coordinator = AppCoordinator()
+  @CoordinatorObject private var coordinator = AppCoordinator()
 
   init() {
     coordinator.register(ServicesCoordinator())
@@ -11,6 +11,8 @@ struct ColomboDemoApp: App {
   }
 
   var body: some Scene {
+    @Bindable var coordinator = coordinator
+    
     WindowGroup {
       TabView(selection: $coordinator.selection) {
         CoordinatedTabView(ServicesCoordinator.self) {
@@ -29,10 +31,4 @@ struct ColomboDemoApp: App {
 }
 
 @Observable
-final class AppCoordinator: TabCoordinator {
-  var presentation: Colombo.Presentation? = nil
-
-  var selection: ObjectIdentifier?
-
-  var tabs: [ObjectIdentifier] = []
-}
+final class AppCoordinator: TabCoordinator {}

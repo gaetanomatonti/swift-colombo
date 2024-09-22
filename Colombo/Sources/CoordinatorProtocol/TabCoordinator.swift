@@ -1,26 +1,32 @@
+import Foundation
+
 /// A coordinator that coordinates tabs in a tab view.
-public protocol TabCoordinator: PresentableCoordinator {
-  var tabs: [ObjectIdentifier] { get set }
+@Observable
+open class TabCoordinator: PresentableCoordinator {
+  var tabs: [ObjectIdentifier]
 
-  var selection: ObjectIdentifier? { get set }
+  public var selection: ObjectIdentifier?
 
-  func register<C>(_ tab: C) where C: FlowCoordinator
+  public init() {
+    self.tabs = []
+    self.selection = nil
+  }
 
-  func select<C>(_ tab: C.Type) where C: FlowCoordinator
-}
-
-public extension TabCoordinator {
-  func register<C>(_ tab: C) where C: FlowCoordinator {
+  public func register<C, R>(_ tab: C) where R: Router, C: FlowCoordinator<R> {
     guard CoordinatorStorage.shared.coordinators[tab.id] == nil else {
       return
     }
 
     CoordinatorStorage.shared.add(tab)
 
+    if tabs.isEmpty {
+      select(C.self)
+    }
+
     tabs.append(C.id)
   }
 
-  func select<C>(_ tab: C.Type) where C: FlowCoordinator {
+  public func select<C, R>(_ tab: C.Type) where R: Router, C: FlowCoordinator<R> {
     selection = tab.id
   }
 }

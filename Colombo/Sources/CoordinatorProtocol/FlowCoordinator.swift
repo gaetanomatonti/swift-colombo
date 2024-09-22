@@ -1,39 +1,41 @@
 import SwiftUI
 
 /// A protocol that defines requirements for an object that coordinates flow navigation.
-public protocol FlowCoordinator: PresentableCoordinator {
-  associatedtype FlowRouter: Router
+@Observable
+open class FlowCoordinator<R>: PresentableCoordinator where R: Router {
 
-  typealias Route = FlowRouter._Route
+  public typealias Route = R._Route
 
   /// The root of the navigation.
-  var root: Route { get }
+  private(set) public var root: Route
 
   /// The path of the navigation stack. Use this property as a binding for the `NavigationStack`.
-  var path: NavigationPath { get set }
+  internal(set) public var path: NavigationPath
 
-  var router: FlowRouter { get }
+  private(set) public var router: R
 
-  func push(_ route: Route)
+  // MARK: - Init
 
-  func pop()
+  public init(root: Route, path: NavigationPath = NavigationPath(), router: R) {
+    self.root = root
+    self.path = path
+    self.router = router
+  }
 
-  func popToRoot()
-}
+  // MARK: - Functions
 
-public extension FlowCoordinator {
   /// Pushes the specified route into the `NavigationStack`.
-  func push(_ route: Route) {
+  public func push(_ route: Route) {
     path.append(route)
   }
 
   /// Pops the last route off the `NavigationStack`.
-  func pop() {
+  public func pop() {
     path.removeLast()
   }
 
   /// Pops to the root of the `NavigationStack`.
-  func popToRoot() {
+  public func popToRoot() {
     path.removeLast(path.count)
   }
 }

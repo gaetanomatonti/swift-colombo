@@ -2,10 +2,9 @@ import Foundation
 import SwiftUI
 
 /// A protocol that defines requirements for an object that coordinates navigation.
-public protocol Coordinator: Observable, AnyObject, Identifiable where ID == ObjectIdentifier {}
-
-public extension Coordinator {
-  var id: ID {
+@Observable
+open class Coordinator: Identifiable {
+  public var id: ID {
     ObjectIdentifier(Self.self)
   }
 
