@@ -1,16 +1,12 @@
 import SwiftUI
 
-public struct CoordinatedView<C>: View where C: Coordinator {
+public struct CoordinatedView<C>: View where C: FlowCoordinator {
 
-  // MARK: - Computed Properties
-
-  let coordinator: C
+  @CoordinatorObject(C.self) var coordinator
 
   // MARK: - Init
 
-  public init(coordinator: C) {
-    self.coordinator = coordinator
-  }
+  public init() {}
 
   // MARK: - Body
 
@@ -26,14 +22,3 @@ public struct CoordinatedView<C>: View where C: Coordinator {
     .environment(coordinator)
   }
 }
-
-/*
-
- CoordinatedTabView($tabCoordinator)
-
- final class AppTabCoordinator {
-  var tabs: [TabCoordinator] = [...]
-
-  var selection: TabCoordinator?
- }
- */

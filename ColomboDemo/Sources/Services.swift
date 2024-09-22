@@ -12,7 +12,7 @@ struct ServicesHome: View, Screen {
 }
 
 @Observable
-final class ServicesCoordinator: Coordinator {
+final class ServicesCoordinator: FlowCoordinator {
   let root = ServicesHome.id
 
   var path = NavigationPath()

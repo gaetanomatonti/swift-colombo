@@ -28,3 +28,12 @@ final class CoordinatorStorage {
 extension CoordinatorStorage {
   static let shared = CoordinatorStorage()
 }
+
+@propertyWrapper
+struct CoordinatorObject<Value> where Value: Coordinator {
+  let wrappedValue: Value
+
+  init(_ value: Value.Type) {
+    wrappedValue = CoordinatorStorage.shared.coordinator(value)
+  }
+}

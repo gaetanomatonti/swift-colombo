@@ -17,7 +17,7 @@ struct MenuHome: View, Screen {
       }
 
       Button("Services") {
-        appCoordinator.select(tab: ServicesCoordinator.self)
+        appCoordinator.select(ServicesCoordinator.self)
       }
     }
   }
@@ -30,7 +30,7 @@ struct MenuSupport: View, Screen {
 }
 
 @Observable
-final class MenuCoordinator: Coordinator {
+final class MenuCoordinator: FlowCoordinator {
   let root = MenuHome.id
 
   var path = NavigationPath()

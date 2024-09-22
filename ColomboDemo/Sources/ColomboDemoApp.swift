@@ -5,18 +5,23 @@ import SwiftUI
 struct ColomboDemoApp: App {
   @State private var coordinator = AppCoordinator()
 
+  init() {
+    coordinator.register(ServicesCoordinator())
+    coordinator.register(MenuCoordinator())
+  }
+
   var body: some Scene {
     WindowGroup {
       TabView(selection: $coordinator.selection) {
-        CoordinatedTabView(coordinator: coordinator.servicesCoordinator) {
+        CoordinatedTabView(ServicesCoordinator.self) {
           Label("Services", systemImage: "mappin.and.ellipse")
         }
-        .presentationDestination(RegistrationCoordinator.self, over: $coordinator.servicesCoordinator)
+        .presentationDestination(RegistrationCoordinator.self, over: ServicesCoordinator.self)
 
-        CoordinatedTabView(coordinator: coordinator.menuCoordinator) {
+        CoordinatedTabView(MenuCoordinator.self) {
           Label("Menu", systemImage: "line.3.horizontal")
         }
-        .presentationDestination(RegistrationCoordinator.self, over: $coordinator.menuCoordinator)
+        .presentationDestination(RegistrationCoordinator.self, over: MenuCoordinator.self)
       }
       .environment(coordinator)
     }
@@ -24,16 +29,10 @@ struct ColomboDemoApp: App {
 }
 
 @Observable
-final class AppCoordinator {
+final class AppCoordinator: TabCoordinator {
+  var presentation: Colombo.Presentation? = nil
+
   var selection: ObjectIdentifier?
 
   var tabs: [ObjectIdentifier] = []
-
-  var servicesCoordinator = ServicesCoordinator()
-
-  var menuCoordinator = MenuCoordinator()
-
-  func select<C>(tab: C.Type) where C: Coordinator {
-    selection = tab.id
-  }
 }

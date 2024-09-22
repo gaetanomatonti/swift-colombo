@@ -32,7 +32,7 @@ struct RegistrationPersonalData: View, Screen {
 }
 
 @Observable
-final class RegistrationCoordinator: Coordinator {
+final class RegistrationCoordinator: FlowCoordinator {
   let root = RegistrationEntry.id
 
   var path = NavigationPath()

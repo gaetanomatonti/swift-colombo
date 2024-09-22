@@ -1,20 +1,17 @@
 import SwiftUI
 
-public struct CoordinatedTabView<C, L>: View where C: Coordinator, L: View {
-  let coordinator: C
-
+public struct CoordinatedTabView<C, L>: View where C: FlowCoordinator, L: View {
   let tabLabel: L
 
-  public init(coordinator: C, @ViewBuilder tabLabel: () -> L) where L == Label<Text, Image> {
-    self.coordinator = coordinator
+  public init(_ coordinator: C.Type, @ViewBuilder tabLabel: () -> L) where L == Label<Text, Image> {
     self.tabLabel = tabLabel()
   }
 
   public var body: some View {
-    CoordinatedView(coordinator: coordinator)
+    CoordinatedView<C>()
       .tabItem {
         tabLabel
       }
-      .tag(coordinator.id)
+      .tag(C.id)
   }
 }
