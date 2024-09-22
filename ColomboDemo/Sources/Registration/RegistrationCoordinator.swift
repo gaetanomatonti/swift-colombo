@@ -4,13 +4,11 @@ import SwiftUI
 
 @Observable
 final class RegistrationCoordinator: FlowCoordinator {
-  let root = RegistrationEntry.id
+  let root = RegistrationRoute.entry
 
   var path = NavigationPath()
 
   var presentation: Presentation? = nil
 
-  var router: some Router {
-    RegistrationRouter()
-  }
+  let router = RegistrationRouter()
 }

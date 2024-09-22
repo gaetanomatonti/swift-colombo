@@ -4,7 +4,7 @@ import SwiftUI
 public protocol FlowCoordinator: PresentableCoordinator {
   associatedtype FlowRouter: Router
 
-  typealias Route = Screen.ID
+  typealias Route = FlowRouter._Route
 
   /// The root of the navigation.
   var root: Route { get }

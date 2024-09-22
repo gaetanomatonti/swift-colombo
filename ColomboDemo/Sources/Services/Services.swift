@@ -1,7 +1,7 @@
 import Colombo
 import SwiftUI
 
-struct ServicesHome: View, Screen {
+struct ServicesHome: View {
   @Environment(ServicesCoordinator.self) var coordinator
 
   var body: some View {

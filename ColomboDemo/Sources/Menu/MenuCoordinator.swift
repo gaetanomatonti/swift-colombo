@@ -4,13 +4,11 @@ import SwiftUI
 
 @Observable
 final class MenuCoordinator: FlowCoordinator {
-  let root = MenuHome.id
+  let root = MenuRoute.home
 
   var path = NavigationPath()
 
   var presentation: Presentation? = nil
 
-  var router: some Router {
-    MenuRouter()
-  }
+  let router = MenuRouter()
 }

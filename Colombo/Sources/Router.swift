@@ -4,9 +4,8 @@ import SwiftUI
 public protocol Router {
   associatedtype Destination: View
 
-  #warning("Make Hashable and remove _Screen.ID.")
-  typealias Route = _Screen.ID
+  associatedtype _Route: Route
 
   @ViewBuilder
-  func destination(for route: Route) -> Destination
+  func destination(for route: _Route) -> Destination
 }

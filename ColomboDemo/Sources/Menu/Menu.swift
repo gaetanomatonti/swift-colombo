@@ -1,7 +1,7 @@
 import Colombo
 import SwiftUI
 
-struct MenuHome: View, Screen {
+struct MenuHome: View {
   @Environment(MenuCoordinator.self) var coordinator
 
   @Environment(AppCoordinator.self) var appCoordinator
@@ -13,7 +13,7 @@ struct MenuHome: View, Screen {
       }
 
       Button("Support") {
-        coordinator.push(MenuSupport.id)
+        coordinator.push(.support)
       }
 
       Button("Services") {
@@ -23,7 +23,7 @@ struct MenuHome: View, Screen {
   }
 }
 
-struct MenuSupport: View, Screen {
+struct MenuSupport: View {
   var body: some View {
     Text("Support")
   }

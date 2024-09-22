@@ -1,7 +1,7 @@
 import Colombo
 import SwiftUI
 
-struct RegistrationEntry: View, Screen {
+struct RegistrationEntry: View {
   @Environment(RegistrationCoordinator.self) var coordinator
 
   @Environment(\.dismiss) var dismiss
@@ -11,7 +11,7 @@ struct RegistrationEntry: View, Screen {
       Text("Entry")
 
       Button("Next") {
-        coordinator.push(RegistrationPersonalData.id)
+        coordinator.push(.personalData)
       }
     }
     .toolbar {
@@ -25,7 +25,7 @@ struct RegistrationEntry: View, Screen {
   }
 }
 
-struct RegistrationPersonalData: View, Screen {
+struct RegistrationPersonalData: View {
   var body: some View {
     Text("Personal Data")
   }

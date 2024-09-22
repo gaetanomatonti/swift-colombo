@@ -3,16 +3,13 @@ import Foundation
 import SwiftUI
 
 struct MenuRouter: Router {
-  func destination(for route: _Screen.ID) -> some View {
+  func destination(for route: MenuRoute) -> some View {
     switch route {
-    case MenuHome.id:
+    case .home:
       MenuHome()
 
-    case MenuSupport.id:
+    case .support:
       MenuSupport()
-
-    default:
-      EmptyView()
     }
   }
 }

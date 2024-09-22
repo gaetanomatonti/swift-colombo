@@ -4,13 +4,11 @@ import SwiftUI
 
 @Observable
 final class ServicesCoordinator: FlowCoordinator {
-  let root = ServicesHome.id
+  let root = ServicesRoute.home
 
   var path = NavigationPath()
 
   var presentation: Presentation? = nil
 
-  var router: some Router {
-    ServicesRouter()
-  }
+  let router = ServicesRouter()
 }

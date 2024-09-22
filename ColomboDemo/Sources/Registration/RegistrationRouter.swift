@@ -3,16 +3,13 @@ import Foundation
 import SwiftUI
 
 struct RegistrationRouter: Router {
-  func destination(for route: _Screen.ID) -> some View {
+  func destination(for route: RegistrationRoute) -> some View {
     switch route {
-    case RegistrationEntry.id:
+    case .entry:
       RegistrationEntry()
 
-    case RegistrationPersonalData.id:
+    case .personalData:
       RegistrationPersonalData()
-
-    default:
-      EmptyView()
     }
   }
 }
