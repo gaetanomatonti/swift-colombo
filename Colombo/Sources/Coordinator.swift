@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 /// A protocol that defines requirements for an object that coordinates navigation.
-public protocol Coordinator: Observable, AnyObject, Identifiable {
+public protocol Coordinator: Observable, AnyObject, Identifiable where ID == ObjectIdentifier {
   associatedtype Destination: View
 
   typealias Route = Screen.ID
@@ -22,7 +22,7 @@ public protocol Coordinator: Observable, AnyObject, Identifiable {
 
   func popToRoot()
 
-  func present(_ coordinator: any Coordinator, presentationStyle: Presentation.Style)
+  func present(_ coordinator: some Coordinator, presentationStyle: Presentation.Style)
 
   func dismiss()
 
@@ -31,21 +31,6 @@ public protocol Coordinator: Observable, AnyObject, Identifiable {
 }
 
 public extension Coordinator {
-  var id: Route {
-    root
-  }
-
-  var _presentation: Binding<Presentation?> {
-    Binding(
-      get: { [presentation] in
-        presentation
-      },
-      set: { [weak self] in
-        self?.presentation = $0
-      }
-    )
-  }
-
   /// Pushes the specified route into the `NavigationStack`.
   func push(_ route: Route) {
     path.append(route)
@@ -65,12 +50,44 @@ public extension Coordinator {
   /// - Parameters:
   ///   - coordinator: The coordinator to present modally.
   ///   - presentationStyle: The style of the modal presentation.
-  func present(_ coordinator: any Coordinator, presentationStyle: Presentation.Style) {
+  func present(_ coordinator: some Coordinator, presentationStyle: Presentation.Style) {
+    CoordinatorStorage.shared.add(coordinator)
     presentation = Presentation(style: presentationStyle, coordinator: coordinator)
   }
 
   /// Dismisses any coordinators presented on top of the current navigation flow.
   func dismiss() {
-    presentation = nil
+    guard let presentation else { return }
+
+    CoordinatorStorage.shared.remove(presentation.coordinatorID)
+    self.presentation = nil
+  }
+}
+
+public extension Coordinator {
+  var id: ID {
+    ObjectIdentifier(Self.self)
+  }
+
+  static var id: ID {
+    ObjectIdentifier(self)
+  }
+}
+
+public enum _Coordinator {
+  public struct ID: CustomDebugStringConvertible, Hashable, Identifiable {
+    let value: String
+
+    public var id: String {
+      value
+    }
+
+    public var debugDescription: String {
+      value
+    }
+
+    init(_ value: String) {
+      self.value = value
+    }
   }
 }

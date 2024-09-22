@@ -4,6 +4,8 @@ import SwiftUI
 struct MenuHome: View, Screen {
   @Environment(MenuCoordinator.self) var coordinator
 
+  @Environment(AppCoordinator.self) var appCoordinator
+
   var body: some View {
     List {
       Button("Registration") {
@@ -12,6 +14,10 @@ struct MenuHome: View, Screen {
 
       Button("Support") {
         coordinator.push(MenuSupport.id)
+      }
+
+      Button("Services") {
+        appCoordinator.select(tab: ServicesCoordinator.self)
       }
     }
   }

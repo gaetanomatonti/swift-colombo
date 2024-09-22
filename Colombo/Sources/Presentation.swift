@@ -12,10 +12,15 @@ public struct Presentation: Identifiable {
 
   let style: Style
 
-  let coordinator: any Coordinator
+  let coordinatorID: ObjectIdentifier
+
+  init<C>(style: Style, coordinator: C) where C: Coordinator {
+    self.style = style
+    self.coordinatorID = C.id
+  }
 
   public var id: String {
-    "\(style.id)_\(coordinator.id.value)"
+    "\(style.id)_\(coordinatorID.hashValue)"
   }
 }
 
