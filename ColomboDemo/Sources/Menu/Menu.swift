@@ -6,6 +6,8 @@ struct MenuHome: View {
 
   @Coordinator(AppCoordinator.self) var appCoordinator
 
+  @State private var username: String = ""
+
   var body: some View {
     List {
       Section("Presentation") {
@@ -25,6 +27,14 @@ struct MenuHome: View {
         Button("Support") {
           coordinator.push(.support)
         }
+
+        HStack {
+          TextField("Username", text: $username)
+
+          Button("Profile") {
+            coordinator.push(.profile(username))
+          }
+        }
       }
 
       Section("Tab") {
@@ -39,5 +49,13 @@ struct MenuHome: View {
 struct MenuSupport: View {
   var body: some View {
     Text("Support")
+  }
+}
+
+struct MenuProfile: View {
+  let username: String
+
+  var body: some View {
+    Text(username)
   }
 }

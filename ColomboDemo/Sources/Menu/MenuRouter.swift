@@ -10,6 +10,9 @@ struct MenuRouter: Router {
 
     case .support:
       MenuSupport()
+
+    case let .profile(username):
+      MenuProfile(username: username)
     }
   }
 }
