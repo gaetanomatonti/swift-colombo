@@ -6,6 +6,7 @@ open class TabCoordinator: PresentableCoordinator {
   #warning("Change into an ordered set.")
   var tabs: [ObjectIdentifier]
 
+  #warning("Fix selection when building with Xcode 15.")
   public var selection: ObjectIdentifier?
 
   public init() {
