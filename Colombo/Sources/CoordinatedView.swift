@@ -1,7 +1,12 @@
 import SwiftUI
 
+/// A view whose navigation is managed by a coordinator.
+///
+/// The content of this view must be managed by a ``FlowCoordinator``.
+#warning("Rename to CoordinatedFlow?")
 public struct CoordinatedView<C, R>: View where R: Router, C: FlowCoordinator<R> {
-
+  
+  /// The coordinator of the view.
   @Coordinator(C.self) var coordinator
 
   // MARK: - Init
@@ -19,6 +24,5 @@ public struct CoordinatedView<C, R>: View where R: Router, C: FlowCoordinator<R>
           coordinator.router.destination(for: route)
         }
     }
-    .environment(coordinator)
   }
 }

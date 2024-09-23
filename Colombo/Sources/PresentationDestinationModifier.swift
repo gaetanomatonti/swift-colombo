@@ -9,7 +9,7 @@ struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinat
 
   /// Whether the `PresentingCoordinator` can present the `PresentedCoordinator`.
   ///
-  /// This property checks that the `Presentation` of the `PresentingCoordinator` contains the identifier of the `PresentingCoordinator`.
+  /// This property checks that the ``Presentation`` of the `PresentingCoordinator` contains the identifier of the `PresentingCoordinator`.
   /// - Note: This check is needed to make sure that the `PresentedCoordinator` is to be presented and is actually contained in the storage.
   var canPresent: Bool {
     guard let presentation = presentingCoordinator.presentation else {
