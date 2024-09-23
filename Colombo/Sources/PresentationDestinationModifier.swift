@@ -23,21 +23,17 @@ struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinat
 
   func body(content: Content) -> some View {
     if canPresent {
-      @Coordinator(PresentedCoordinator.self) var presentedCoordinator
       @Bindable var presentingCoordinator = presentingCoordinator
 
       content
-        .sheet(item: $presentingCoordinator.presentation.sheet) {
-          presentingCoordinator.dismiss(presentedCoordinator)
-        } content: { presentation in
+        .sheet(item: $presentingCoordinator.presentation.sheet) { presentation in
           CoordinatedNavigationView<PresentedCoordinator, R>()
             .presentationCornerRadius(presentation.style.cornerRadius)
             .presentationDetents(presentation.style.presentationDetents)
             .presentationDragIndicator(presentation.style.dragIndicatorVisibility)
+            .interactiveDismissDisabled(presentation.style.isInteractiveDismissDisabled)
         }
-        .fullScreenCover(item: $presentingCoordinator.presentation.fullScreenCover) {
-          presentingCoordinator.dismiss(presentedCoordinator)
-        } content: { _ in
+        .fullScreenCover(item: $presentingCoordinator.presentation.fullScreenCover) { _ in
           CoordinatedNavigationView<PresentedCoordinator, R>()
         }
     } else {

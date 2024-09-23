@@ -42,7 +42,10 @@ extension Presentation {
     
     /// The visibility of the drag indicator.
     let dragIndicatorVisibility: Visibility
-    
+
+    #warning("Defaults to true because of a bug with interactive dismiss.")
+    let isInteractiveDismissDisabled: Bool = true
+
     public let id: ID
     
     init(

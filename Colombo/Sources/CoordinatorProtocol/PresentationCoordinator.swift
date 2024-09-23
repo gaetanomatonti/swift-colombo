@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 /// A coordinator that is capable of presenting another coordinator.
 @Observable
@@ -7,7 +8,13 @@ open class PresentationCoordinator: CoordinatorProtocol {
   // MARK: - Stored Properties
 
   /// The presentation on top of the current navigation flow.
-  internal(set) public var presentation: Presentation?
+  internal(set) public var presentation: Presentation? {
+    didSet {
+      if let oldValue, presentation == nil {
+        dismiss(from: oldValue)
+      }
+    }
+  }
 
   // MARK: - Init
 
@@ -36,15 +43,9 @@ open class PresentationCoordinator: CoordinatorProtocol {
     self.presentation = nil
   }
 
-  /// Dismisses any coordinators presented on top of the current navigation flow.
-  func dismiss<C>(_ coordinator: C) where C: CoordinatorProtocol {
-    guard let presentation else {
-      CoordinatorStorage.shared.remove(coordinator.id)
-      self.presentation = nil
-      return
-    }
-
+  /// Dismisses the coordinator in the current presentation.
+  /// - Parameter presentation: The presentation of the coordinator.
+  private func dismiss(from presentation: Presentation) {
     CoordinatorStorage.shared.remove(presentation.coordinatorID)
-    self.presentation = nil
   }
 }
