@@ -9,7 +9,14 @@ struct MenuHome: View {
   var body: some View {
     List {
       Button("Registration") {
-        coordinator.present(RegistrationCoordinator(), presentationStyle: .sheet)
+        coordinator.present(
+          RegistrationCoordinator(),
+          presentationStyle: .sheet(
+            cornerRadius: 32,
+            presentationDetents: [.medium, .large],
+            dragIndicatorVisibility: .hidden
+          )
+        )
       }
 
       Button("Support") {

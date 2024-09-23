@@ -29,12 +29,15 @@ struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinat
       content
         .sheet(item: $presentingCoordinator.presentation.sheet) {
           presentingCoordinator.dismiss(presentedCoordinator)
-        } content: { item in
+        } content: { presentation in
           CoordinatedView<PresentedCoordinator, R>()
+            .presentationCornerRadius(presentation.style.cornerRadius)
+            .presentationDetents(presentation.style.presentationDetents)
+            .presentationDragIndicator(presentation.style.dragIndicatorVisibility)
         }
         .fullScreenCover(item: $presentingCoordinator.presentation.fullScreenCover) {
           presentingCoordinator.dismiss(presentedCoordinator)
-        } content: { item in
+        } content: { _ in
           CoordinatedView<PresentedCoordinator, R>()
         }
     } else {

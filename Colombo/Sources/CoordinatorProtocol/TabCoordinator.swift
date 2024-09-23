@@ -3,16 +3,25 @@ import Foundation
 /// A coordinator that coordinates tabs in a tab view.
 @Observable
 open class TabCoordinator: PresentableCoordinator {
+  
+  // MARK: - Stored Properties
+  
+  /// The coordinator set as tabs.
   #warning("Change into an ordered set.")
   var tabs: [ObjectIdentifier]
 
+  /// The identifier of the selected coordinator.
   #warning("Fix selection when building with Xcode 15.")
   public var selection: ObjectIdentifier?
 
+  // MARK: - Init
+  
   public init() {
     self.tabs = []
     self.selection = nil
   }
+  
+  // MARK: - Functions
 
   public func register<C, R>(_ tab: C) where R: Router, C: FlowCoordinator<R> {
     guard CoordinatorStorage.shared.coordinators[tab.id] == nil else {
