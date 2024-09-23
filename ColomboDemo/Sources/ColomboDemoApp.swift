@@ -25,7 +25,6 @@ struct ColomboDemoApp: App {
         }
         .presentationDestination(RegistrationCoordinator.self, over: MenuCoordinator.self)
       }
-      .environment(coordinator)
     }
   }
 }
