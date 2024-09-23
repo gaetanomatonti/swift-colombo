@@ -2,7 +2,7 @@ import Colombo
 import SwiftUI
 
 struct RegistrationEntry: View {
-  @CoordinatorObject(RegistrationCoordinator.self) var coordinator
+  @Coordinator(RegistrationCoordinator.self) var coordinator
 
   @Environment(\.dismiss) var dismiss
 

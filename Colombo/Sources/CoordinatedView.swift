@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct CoordinatedView<C, R>: View where R: Router, C: FlowCoordinator<R> {
 
-  @CoordinatorObject(C.self) var coordinator
+  @Coordinator(C.self) var coordinator
 
   // MARK: - Init
 

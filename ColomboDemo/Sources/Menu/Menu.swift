@@ -2,9 +2,9 @@ import Colombo
 import SwiftUI
 
 struct MenuHome: View {
-  @CoordinatorObject(MenuCoordinator.self) var coordinator
+  @Coordinator(MenuCoordinator.self) var coordinator
 
-  @CoordinatorObject(AppCoordinator.self) var appCoordinator
+  @Coordinator(AppCoordinator.self) var appCoordinator
 
   var body: some View {
     List {

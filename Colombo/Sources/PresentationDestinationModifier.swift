@@ -5,7 +5,7 @@ struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinat
 
   // MARK: - Computed Property
 
-  @CoordinatorObject(PresentingCoordinator.self) var presentingCoordinator
+  @Coordinator(PresentingCoordinator.self) var presentingCoordinator
 
   /// Whether the `PresentingCoordinator` can present the `PresentedCoordinator`.
   ///
@@ -19,7 +19,7 @@ struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinat
 
   func body(content: Content) -> some View {
     if canPresent {
-      @CoordinatorObject(PresentedCoordinator.self) var presentedCoordinator
+      @Coordinator(PresentedCoordinator.self) var presentedCoordinator
       @Bindable var presentingCoordinator = presentingCoordinator
 
       content
