@@ -5,21 +5,31 @@ import Foundation
 final class CoordinatorStorage {
   
   // MARK: - Stored Properties
-  
+
+  /// The identifier of the root coordinator of the application.
+  private(set) var rootCoordinator: ObjectIdentifier?
+
   /// The dictionary of coordinators, keyed by their type identifier.
   private(set) var coordinators: [ObjectIdentifier: Any] = [:]
-  
+
   // MARK: - Init
   
   private init() {}
 
   // MARK: - Functions
-  
+
+  func set<Coordinator>(root coordinator: Coordinator) where Coordinator: CoordinatorProtocol {
+    assert(rootCoordinator == nil, "Attempted to set a root coordinator more than once.")
+
+    add(coordinator)
+    rootCoordinator = coordinator.id
+  }
+
   /// Adds the instance of the coordinator to the shared storage.
   /// - Parameter coordinator: The instance of the coordinator to store.
   /// - Warning: This method has internal sanity checks to make sure a coordinator type cannot be stored twice.
   func add<Coordinator>(_ coordinator: Coordinator) where Coordinator: CoordinatorProtocol {
-    assert(_coordinator(Coordinator.self) == nil)
+    assert(_coordinator(Coordinator.self) == nil, "Attempted to insert a coordinator more than once.")
 
     coordinators[Coordinator.id] = coordinator
   }

@@ -3,7 +3,7 @@ import SwiftUI
 
 @main
 struct ColomboDemoApp: App {
-  @Coordinator private var coordinator = AppCoordinator()
+  @RootCoordinator private var coordinator = AppCoordinator()
 
   init() {
     coordinator.register(ServicesCoordinator())
