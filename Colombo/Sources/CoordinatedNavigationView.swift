@@ -3,7 +3,6 @@ import SwiftUI
 /// A view whose navigation is managed by a coordinator.
 ///
 /// The content of this view must be managed by a ``FlowCoordinator``.
-#warning("Rename to CoordinatedFlow?")
 public struct CoordinatedNavigationView<C, R>: View where R: Router, C: NavigationCoordinator<R> {
   
   /// The coordinator of the view.

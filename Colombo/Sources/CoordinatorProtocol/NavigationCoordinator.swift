@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A protocol that defines requirements for an object that coordinates flow navigation.
 @Observable
-open class FlowCoordinator<R>: PresentableCoordinator where R: Router {
+open class NavigationCoordinator<R>: PresentationCoordinator where R: Router {
 
   public typealias Route = R._Route
 

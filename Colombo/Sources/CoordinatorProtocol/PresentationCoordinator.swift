@@ -1,9 +1,8 @@
 import Foundation
 
 /// A coordinator that is capable of presenting another coordinator.
-#warning("Rename to make it clearer that it can present, not that it can be presented.")
 @Observable
-open class PresentableCoordinator: CoordinatorProtocol {
+open class PresentationCoordinator: CoordinatorProtocol {
 
   // MARK: - Stored Properties
 

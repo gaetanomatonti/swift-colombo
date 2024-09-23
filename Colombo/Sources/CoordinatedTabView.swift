@@ -3,7 +3,7 @@ import SwiftUI
 /// A view that coordinates a tab.
 ///
 /// The content of this view must be managed by a ``FlowCoordinator``.
-public struct CoordinatedTabView<C, L, R>: View where R: Router, C: FlowCoordinator<R>, L: View {
+public struct CoordinatedTabView<C, L, R>: View where R: Router, C: NavigationCoordinator<R>, L: View {
   
   // MARK: - Stored Properties
   
@@ -19,7 +19,7 @@ public struct CoordinatedTabView<C, L, R>: View where R: Router, C: FlowCoordina
   // MARK: - Body
 
   public var body: some View {
-    CoordinatedView<C, R>()
+    CoordinatedNavigationView<C, R>()
       .tabItem {
         tabLabel
       }

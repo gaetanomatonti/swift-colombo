@@ -2,7 +2,7 @@ import Foundation
 
 /// A coordinator that coordinates tabs in a tab view.
 @Observable
-open class TabCoordinator: PresentableCoordinator {
+open class TabCoordinator: PresentationCoordinator {
   
   // MARK: - Stored Properties
   
@@ -23,7 +23,7 @@ open class TabCoordinator: PresentableCoordinator {
   
   // MARK: - Functions
 
-  public func register<C, R>(_ tab: C) where R: Router, C: FlowCoordinator<R> {
+  public func register<C, R>(_ tab: C) where R: Router, C: NavigationCoordinator<R> {
     guard CoordinatorStorage.shared.coordinators[tab.id] == nil else {
       return
     }
@@ -37,7 +37,7 @@ open class TabCoordinator: PresentableCoordinator {
     }
   }
 
-  public func select<C, R>(_ tab: C.Type) where R: Router, C: FlowCoordinator<R> {
+  public func select<C, R>(_ tab: C.Type) where R: Router, C: NavigationCoordinator<R> {
     guard tabs.contains(where: { $0 == tab.id }) else {
       fatalError("Attempted to select an unregistered tab.")
     }

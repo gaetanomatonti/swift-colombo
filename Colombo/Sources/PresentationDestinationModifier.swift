@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A view modifier that controls the presentation of a coordinator.
-struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinator, R>: ViewModifier where R: Router, PresentedCoordinator: FlowCoordinator<R>, PresentingCoordinator: PresentableCoordinator {
+struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinator, R>: ViewModifier where R: Router, PresentedCoordinator: NavigationCoordinator<R>, PresentingCoordinator: PresentationCoordinator {
 
   // MARK: - Computed Property
 
@@ -30,7 +30,7 @@ struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinat
         .sheet(item: $presentingCoordinator.presentation.sheet) {
           presentingCoordinator.dismiss(presentedCoordinator)
         } content: { presentation in
-          CoordinatedView<PresentedCoordinator, R>()
+          CoordinatedNavigationView<PresentedCoordinator, R>()
             .presentationCornerRadius(presentation.style.cornerRadius)
             .presentationDetents(presentation.style.presentationDetents)
             .presentationDragIndicator(presentation.style.dragIndicatorVisibility)
@@ -38,7 +38,7 @@ struct PresentationDestinationModifier<PresentedCoordinator, PresentingCoordinat
         .fullScreenCover(item: $presentingCoordinator.presentation.fullScreenCover) {
           presentingCoordinator.dismiss(presentedCoordinator)
         } content: { _ in
-          CoordinatedView<PresentedCoordinator, R>()
+          CoordinatedNavigationView<PresentedCoordinator, R>()
         }
     } else {
       content
