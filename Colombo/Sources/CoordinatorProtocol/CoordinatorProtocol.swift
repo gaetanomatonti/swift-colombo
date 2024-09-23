@@ -6,7 +6,7 @@ public protocol CoordinatorProtocol: AnyObject, Identifiable, Observable {}
 
 public extension CoordinatorProtocol {
   var id: ObjectIdentifier {
-    ObjectIdentifier(Self.self)
+    Self.id
   }
 
   static var id: ObjectIdentifier {
