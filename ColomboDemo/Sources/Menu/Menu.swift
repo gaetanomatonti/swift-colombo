@@ -8,23 +8,29 @@ struct MenuHome: View {
 
   var body: some View {
     List {
-      Button("Registration") {
-        coordinator.present(
-          RegistrationCoordinator(),
-          presentationStyle: .sheet(
-            cornerRadius: 32,
-            presentationDetents: [.medium, .large],
-            dragIndicatorVisibility: .hidden
+      Section("Presentation") {
+        Button("Registration") {
+          coordinator.present(
+            RegistrationCoordinator(),
+            presentationStyle: .sheet(
+              cornerRadius: 32,
+              presentationDetents: [.medium, .large],
+              dragIndicatorVisibility: .hidden
+            )
           )
-        )
+        }
       }
 
-      Button("Support") {
-        coordinator.push(.support)
+      Section("Navigation") {
+        Button("Support") {
+          coordinator.push(.support)
+        }
       }
 
-      Button("Services") {
-        appCoordinator.select(ServicesCoordinator.self)
+      Section("Tab") {
+        Button("Services") {
+          appCoordinator.select(ServicesCoordinator.self)
+        }
       }
     }
   }
