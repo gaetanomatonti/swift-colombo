@@ -15,15 +15,21 @@ struct ColomboDemoApp: App {
     
     WindowGroup {
       TabView(selection: $coordinator.selection) {
-        CoordinatedTabView(ServicesCoordinator.self) {
+        CoordinatedTabView(ServicesCoordinator.self) { view in
+          view
+            .presentationDestination(RegistrationCoordinator.self)
+        }
+        .tabItem {
           Label("Services", systemImage: "mappin.and.ellipse")
         }
-        .presentationDestination(RegistrationCoordinator.self, over: ServicesCoordinator.self)
 
-        CoordinatedTabView(MenuCoordinator.self) {
+        CoordinatedTabView(MenuCoordinator.self) { view in
+          view
+            .presentationDestination(RegistrationCoordinator.self)
+        }
+        .tabItem {
           Label("Menu", systemImage: "line.3.horizontal")
         }
-        .presentationDestination(RegistrationCoordinator.self, over: MenuCoordinator.self)
       }
     }
   }

@@ -12,9 +12,9 @@ public struct Presentation: Identifiable {
     "\(style.id)_\(coordinatorID.hashValue)"
   }
 
-  init<C>(style: Style, coordinator: C) where C: CoordinatorProtocol {
+  init<Coordinator>(style: Style, coordinator: Coordinator) where Coordinator: CoordinatorProtocol {
     self.style = style
-    self.coordinatorID = C.id
+    self.coordinatorID = Coordinator.id
   }
 }
 

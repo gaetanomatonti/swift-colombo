@@ -23,21 +23,21 @@ open class TabCoordinator: PresentationCoordinator {
   
   // MARK: - Functions
 
-  public func register<C, R>(_ tab: C) where R: Router, C: NavigationCoordinator<R> {
+  public func register<Coordinator, Router>(_ tab: Coordinator) where Router: Colombo.Router, Coordinator: NavigationCoordinator<Router> {
     guard CoordinatorStorage.shared.coordinators[tab.id] == nil else {
       return
     }
 
     CoordinatorStorage.shared.add(tab)
 
-    tabs.append(C.id)
-    
+    tabs.append(Coordinator.id)
+
     if selection == nil {
-      select(C.self)
+      select(Coordinator.self)
     }
   }
 
-  public func select<C, R>(_ tab: C.Type) where R: Router, C: NavigationCoordinator<R> {
+  public func select<Coordinator, Router>(_ tab: Coordinator.Type) where Router: Colombo.Router, Coordinator: NavigationCoordinator<Router> {
     guard tabs.contains(where: { $0 == tab.id }) else {
       fatalError("Attempted to select an unregistered tab.")
     }

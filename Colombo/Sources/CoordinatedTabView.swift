@@ -2,27 +2,42 @@ import SwiftUI
 
 /// A view that coordinates a tab.
 ///
-/// The content of this view must be managed by a ``FlowCoordinator``.
-public struct CoordinatedTabView<C, L, R>: View where R: Router, C: NavigationCoordinator<R>, L: View {
-  
+/// The content of this view must be managed by a ``NavigationCoordinator``.
+public struct CoordinatedTabView<CoordinatedView, NavigationCoordinator, Router>: View where CoordinatedView: View, Router: Colombo.Router, NavigationCoordinator: Colombo.NavigationCoordinator<Router> {
+
   // MARK: - Stored Properties
-  
-  /// The label of the tab item.
-  let tabLabel: L
+
+  /// The coordinated view content.
+  let coordinatedView: CoordinatedView
 
   // MARK: - Init
-  
-  public init(_ coordinator: C.Type, @ViewBuilder tabLabel: () -> L) where L == Label<Text, Image> {
-    self.tabLabel = tabLabel()
+
+  /// Creates an instance of a coordinated tab view.
+  /// - Parameters:
+  ///   - coordinator: The type of the coordinator that manages the coordinated view content.
+  ///   - content: The content of the coordinated view.
+  /// - Note: To work properly, the content of the coordinated view should always return the argument of the content closure.
+  ///
+  /// ```swift
+  /// CoordinatedTabView(ContentCoordinator.self) { coordinatedContent in
+  ///   coordinatedContent // CoordinatedNavigationView<ContentCoordinator, ContentCoordinator.Router>
+  ///     .tabItem { ... }
+  /// }
+  /// ```
+  public init(
+    _ coordinator: NavigationCoordinator.Type,
+    @ViewBuilder content: (CoordinatedNavigationView<NavigationCoordinator, Router>) -> CoordinatedView
+  ) {
+    self.coordinatedView = content(CoordinatedNavigationView())
   }
   
   // MARK: - Body
 
   public var body: some View {
-    CoordinatedNavigationView<C, R>()
-      .tabItem {
-        tabLabel
-      }
-      .tag(C.id)
+    @Coordinator(NavigationCoordinator.self) var coordinator
+
+    coordinatedView
+      .tag(NavigationCoordinator.id)
+      .environment(\.presentationCoordinator, coordinator)
   }
 }

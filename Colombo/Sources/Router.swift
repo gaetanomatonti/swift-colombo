@@ -5,11 +5,11 @@ import SwiftUI
 public protocol Router {
   associatedtype Destination: View
 
-  associatedtype _Route: Route
+  associatedtype Route: Colombo.Route
 
   /// Creates a destination for the passed route.
   /// - Parameter route: The route that identifies the destination.
   /// - Returns: The destination that matches the route.
   @ViewBuilder
-  func destination(for route: _Route) -> Destination
+  func destination(for route: Route) -> Destination
 }

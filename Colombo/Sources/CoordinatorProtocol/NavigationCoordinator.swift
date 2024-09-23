@@ -2,9 +2,9 @@ import SwiftUI
 
 /// A protocol that defines requirements for an object that coordinates flow navigation.
 @Observable
-open class NavigationCoordinator<R>: PresentationCoordinator where R: Router {
+open class NavigationCoordinator<Router>: PresentationCoordinator where Router: Colombo.Router {
 
-  public typealias Route = R._Route
+  public typealias Route = Router.Route
 
   /// The root of the navigation.
   private(set) public var root: Route
@@ -12,11 +12,11 @@ open class NavigationCoordinator<R>: PresentationCoordinator where R: Router {
   /// The path of the navigation stack. Use this property as a binding for the `NavigationStack`.
   internal(set) public var path: NavigationPath
 
-  private(set) public var router: R
+  private(set) public var router: Router
 
   // MARK: - Init
 
-  public init(root: Route, path: NavigationPath = NavigationPath(), router: R) {
+  public init(root: Route, path: NavigationPath = NavigationPath(), router: Router) {
     self.root = root
     self.path = path
     self.router = router

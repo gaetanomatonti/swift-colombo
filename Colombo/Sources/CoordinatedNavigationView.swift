@@ -2,11 +2,11 @@ import SwiftUI
 
 /// A view whose navigation is managed by a coordinator.
 ///
-/// The content of this view must be managed by a ``FlowCoordinator``.
-public struct CoordinatedNavigationView<C, R>: View where R: Router, C: NavigationCoordinator<R> {
-  
+/// The content of this view must be managed by a ``NavigationCoordinator``.
+public struct CoordinatedNavigationView<NavigationCoordinator, Router>: View where Router: Colombo.Router, NavigationCoordinator: Colombo.NavigationCoordinator<Router> {
+
   /// The coordinator of the view.
-  @Coordinator(C.self) var coordinator
+  @Coordinator(NavigationCoordinator.self) var coordinator
 
   // MARK: - Init
 
@@ -19,7 +19,7 @@ public struct CoordinatedNavigationView<C, R>: View where R: Router, C: Navigati
 
     NavigationStack(path: $coordinator.path) {
       coordinator.router.destination(for: coordinator.root)
-        .navigationDestination(for: C.Route.self) { route in
+        .navigationDestination(for: NavigationCoordinator.Route.self) { route in
           coordinator.router.destination(for: route)
         }
     }
