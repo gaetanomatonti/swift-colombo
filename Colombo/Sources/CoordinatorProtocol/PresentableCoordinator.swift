@@ -3,7 +3,7 @@ import Foundation
 /// A coordinator that is capable of presenting another coordinator.
 #warning("Rename to make it clearer that it can present, not that it can be presented.")
 @Observable
-open class PresentableCoordinator: Coordinator {
+open class PresentableCoordinator: CoordinatorProtocol {
 
   // MARK: - Stored Properties
 
@@ -22,7 +22,7 @@ open class PresentableCoordinator: Coordinator {
   /// - Parameters:
   ///   - coordinator: The coordinator to present modally.
   ///   - presentationStyle: The style of the modal presentation.
-  public func present(_ coordinator: some Coordinator, presentationStyle: Presentation.Style) {
+  public func present(_ coordinator: some CoordinatorProtocol, presentationStyle: Presentation.Style) {
     CoordinatorStorage.shared.add(coordinator)
     presentation = Presentation(style: presentationStyle, coordinator: coordinator)
   }
@@ -38,7 +38,7 @@ open class PresentableCoordinator: Coordinator {
   }
 
   /// Dismisses any coordinators presented on top of the current navigation flow.
-  func dismiss<C>(_ coordinator: C) where C: Coordinator {
+  func dismiss<C>(_ coordinator: C) where C: CoordinatorProtocol {
     guard let presentation else {
       CoordinatorStorage.shared.remove(coordinator.id)
       self.presentation = nil

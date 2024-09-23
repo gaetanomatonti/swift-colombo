@@ -4,13 +4,13 @@ import Foundation
 final class CoordinatorStorage {
   private(set) var coordinators: [ObjectIdentifier: Any] = [:]
 
-  func add<C>(_ coordinator: C) where C: Coordinator {
+  func add<C>(_ coordinator: C) where C: CoordinatorProtocol {
     assert(_coordinator(C.self) == nil)
 
     coordinators[C.id] = coordinator
   }
 
-  func remove<C>(_ coordinator: C) where C: Coordinator {
+  func remove<C>(_ coordinator: C) where C: CoordinatorProtocol {
     coordinators.removeValue(forKey: C.id)
   }
 
@@ -18,7 +18,7 @@ final class CoordinatorStorage {
     coordinators.removeValue(forKey: key)
   }
 
-  func coordinator<C>(_ key: C.Type) -> C where C: Coordinator {
+  func coordinator<C>(_ key: C.Type) -> C where C: CoordinatorProtocol {
     guard let coordinator = _coordinator(key) else {
       fatalError("Coordinator not found for \(key)")
     }
@@ -26,7 +26,7 @@ final class CoordinatorStorage {
     return coordinator
   }
 
-  private func _coordinator<C>(_ key: C.Type) -> C? where C: Coordinator {
+  private func _coordinator<C>(_ key: C.Type) -> C? where C: CoordinatorProtocol {
     coordinators[C.id] as? C
   }
 }

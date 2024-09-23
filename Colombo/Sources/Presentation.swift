@@ -14,7 +14,7 @@ public struct Presentation: Identifiable {
 
   let coordinatorID: ObjectIdentifier
 
-  init<C>(style: Style, coordinator: C) where C: Coordinator {
+  init<C>(style: Style, coordinator: C) where C: CoordinatorProtocol {
     self.style = style
     self.coordinatorID = C.id
   }

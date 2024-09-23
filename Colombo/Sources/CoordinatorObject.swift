@@ -2,7 +2,7 @@ import Foundation
 
 /// A property wrapper that can read and write a coordinator object in shared storage.
 @propertyWrapper
-public struct CoordinatorObject<Value> where Value: Coordinator {
+public struct CoordinatorObject<Value> where Value: CoordinatorProtocol {
   public let wrappedValue: Value
 
   public init(_ value: Value.Type) {
