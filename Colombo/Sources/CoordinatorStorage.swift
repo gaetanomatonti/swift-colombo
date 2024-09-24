@@ -2,6 +2,7 @@ import Foundation
 
 /// An object to store coordinators.
 @Observable
+@MainActor
 final class CoordinatorStorage {
   
   // MARK: - Stored Properties

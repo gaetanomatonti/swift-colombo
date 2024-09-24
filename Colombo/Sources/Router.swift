@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 /// A protocol defining requirements for a type that defines the destinations for the specified routes.
+@MainActor
 public protocol Router {
   associatedtype Destination: View
 

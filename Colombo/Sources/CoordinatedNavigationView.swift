@@ -25,3 +25,14 @@ public struct CoordinatedNavigationView<NavigationCoordinator, Router>: View whe
     }
   }
 }
+
+//extension NavigationStack {
+//  init<NavigationCoordinator, Router>(_ coordinator: NavigationCoordinator.Type) where Router: Colombo.Router, NavigationCoordinator: Colombo.NavigationCoordinator<Router> {
+//    @Coordinator(NavigationCoordinator.self) var navigationCoordinator
+//    @Bindable var coordinator = navigationCoordinator
+//    
+//    self = NavigationStack(path: $coordinator.path) {
+//      coordinator.router.destination(for: coordinator.root)
+//    }
+//  }
+//}

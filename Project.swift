@@ -44,6 +44,12 @@ let project = Project(
     disableBundleAccessors: true,
     textSettings: .textSettings(usesTabs: false, indentWidth: 2, tabWidth: 2)
   ),
+  settings: .settings(
+    base: [
+      "SWIFT_STRICT_CONCURRENCY": "complete",
+      "SWIFT_VERSION": "6",
+    ]
+  ),
   targets: [
     demoApp,
     colombo,

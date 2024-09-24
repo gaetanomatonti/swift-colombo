@@ -106,3 +106,9 @@ extension Binding where Value == Presentation? {
     return .constant(nil)
   }
 }
+
+extension Presentation: Sendable {}
+
+extension Presentation.Style: Sendable {}
+
+extension Presentation.Style.ID: Sendable {}
