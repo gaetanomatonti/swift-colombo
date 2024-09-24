@@ -49,3 +49,38 @@ open class PresentationCoordinator: CoordinatorProtocol {
     CoordinatorStorage.shared.remove(presentation.coordinatorID)
   }
 }
+
+@MainActor
+extension PresentationCoordinator {
+  /// The sheet presentation on top of the current navigation.
+  ///
+  /// This value is optional, and only has a value if the style of the presentation is `.sheet`.
+  var sheetPresentation: Presentation? {
+    get {
+      if case .sheet = presentation?.style.id {
+        return presentation
+      } else {
+        return nil
+      }
+    }
+    set {
+      presentation = newValue
+    }
+  }
+
+  /// The sheet presentation on top of the current navigation.
+  ///
+  /// This value is optional, and only has a value if the style of the presentation is `.fullScreenCover`.
+  var fullScreenCoverPresentation: Presentation? {
+    get {
+      if case .fullScreenCover = presentation?.style.id {
+        return presentation
+      } else {
+        return nil
+      }
+    }
+    set {
+      presentation = newValue
+    }
+  }
+}

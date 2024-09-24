@@ -7,15 +7,6 @@ struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifi
 
   @Environment(\.presentationCoordinator) var presentingCoordinator
 
-  /// A `Binding` to the presentation of the `presentingCoordinator`.
-  private var presentation: Binding<Presentation?> {
-    Binding {
-      presentingCoordinator?.presentation
-    } set: { newValue in
-      presentingCoordinator?.presentation = newValue
-    }
-  }
-
   /// Whether the `PresentingCoordinator` can present the `PresentedCoordinator`.
   ///
   /// This property checks that the ``Presentation`` of the `presentingCoordinator` contains the identifier of the `PresentedCoordinator`.
@@ -35,16 +26,18 @@ struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifi
   // MARK: - Body
 
   func body(content: Content) -> some View {
-    if canPresent {
+    if let presentingCoordinator, canPresent {
+      @Bindable var presentingCoordinator = presentingCoordinator
+
       content
-        .sheet(item: presentation.sheet) { presentation in
+        .sheet(item: $presentingCoordinator.sheetPresentation) { presentation in
           CoordinatedNavigationView<PresentedCoordinator, Router>()
             .presentationCornerRadius(presentation.style.cornerRadius)
             .presentationDetents(presentation.style.presentationDetents)
             .presentationDragIndicator(presentation.style.dragIndicatorVisibility)
             .interactiveDismissDisabled(presentation.style.isInteractiveDismissDisabled)
         }
-        .fullScreenCover(item: presentation.fullScreenCover) { _ in
+        .fullScreenCover(item: $presentingCoordinator.fullScreenCoverPresentation) { _ in
           CoordinatedNavigationView<PresentedCoordinator, Router>()
         }
     } else {

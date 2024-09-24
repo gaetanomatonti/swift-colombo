@@ -89,24 +89,6 @@ public extension Presentation.Style {
   }
 }
 
-extension Binding where Value == Presentation? {
-  var sheet: Binding<Presentation?> {
-    if case .sheet = wrappedValue?.style.id {
-      return self
-    }
-
-    return .constant(nil)
-  }
-
-  var fullScreenCover: Binding<Presentation?> {
-    if case .fullScreenCover = wrappedValue?.style.id {
-      return self
-    }
-
-    return .constant(nil)
-  }
-}
-
 extension Presentation: Sendable {}
 
 extension Presentation.Style: Sendable {}
