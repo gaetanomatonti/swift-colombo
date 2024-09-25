@@ -74,14 +74,18 @@ struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifi
       @Bindable var presentingCoordinator = presentingCoordinator
 
       content
-        .sheet(item: sheetPresentation) { presentation in
+        .sheet(item: sheetPresentation) {
+          presentingCoordinator.onDismiss()
+        } content: { presentation in
           NavigationStack(PresentedCoordinator.self)
             .presentationCornerRadius(presentation.style.cornerRadius)
             .presentationDetents(presentation.style.presentationDetents)
             .presentationDragIndicator(presentation.style.dragIndicatorVisibility)
             .interactiveDismissDisabled(presentation.style.isInteractiveDismissDisabled)
         }
-        .fullScreenCover(item: fullScreenCoverPresentation) { _ in
+        .fullScreenCover(item: fullScreenCoverPresentation) {
+          presentingCoordinator.onDismiss()
+        } content: { _ in
           NavigationStack(PresentedCoordinator.self)
         }
     } else {

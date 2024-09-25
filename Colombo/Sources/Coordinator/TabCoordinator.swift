@@ -11,7 +11,6 @@ open class TabCoordinator<Router>: PresentationCoordinator where Router: Colombo
   // MARK: - Stored Properties
 
   /// The identifier of the selected coordinator.
-  #warning("Fix selection when building with Xcode 15.")
   internal(set) public var selection: Selection
 
   private(set) public var router: Router
