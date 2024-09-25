@@ -1,6 +1,11 @@
 import Foundation
 
-/// A property wrapper that can read and write a coordinator object in shared storage.
+/// A property wrapper that can write a coordinator object in shared storage.
+///
+/// Use this property wrapper to set the root coordinator of your application.
+///
+/// - Note: This property wrapper is meant to be used only once throughout the lifecycle of the application.
+///         Calling this property wrapper multiple times results in a fatal error.
 @propertyWrapper
 @MainActor
 public struct RootCoordinator<Value> where Value: CoordinatorProtocol {
