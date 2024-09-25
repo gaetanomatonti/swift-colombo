@@ -5,7 +5,9 @@ import Foundation
 open class TabCoordinator<Router>: PresentationCoordinator where Router: Colombo.Router {
   
   public typealias Selection = Router.Route
-  
+
+  public typealias Data = [Selection]
+
   // MARK: - Stored Properties
 
   /// The identifier of the selected coordinator.
@@ -16,7 +18,7 @@ open class TabCoordinator<Router>: PresentationCoordinator where Router: Colombo
 
   /// The coordinator set as tabs.
   #warning("Change into an ordered set.")
-  private(set) public var tabs: [Selection]
+  private(set) public var tabs: Data
 
   // MARK: - Init
   
