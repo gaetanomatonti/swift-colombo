@@ -4,49 +4,39 @@ import SwiftUI
 @main
 struct ColomboDemoApp: App {
   @RootCoordinator private var coordinator = AppCoordinator()
+  
+  @Coordinator private var servicesCoordinator = ServicesCoordinator()
 
-  init() {
-    coordinator.register(ServicesCoordinator())
-    coordinator.register(MenuCoordinator())
-  }
+  @Coordinator private var menuCoordinator = MenuCoordinator()
 
   var body: some Scene {
-    @Bindable var coordinator = coordinator
-    
     WindowGroup {
-      TabView(selection: $coordinator.selection) {
-        NavigationStack(ServicesCoordinator.self)
-          .tabItem {
-            Label("Services", systemImage: "mappin.and.ellipse")
-          }
-          .tag(ServicesCoordinator.id)
-
-        NavigationStack(MenuCoordinator.self)
-          .tabItem {
-            Label("Menu", systemImage: "line.3.horizontal")
-          }
-          .tag(MenuCoordinator.id)
-      }
+      TabView(AppCoordinator.self)
     }
   }
 }
 
 @Observable
-final class AppCoordinator: TabCoordinator {}
+final class AppCoordinator: TabCoordinator<TabRouter> {
+  convenience init() {
+    self.init(router: TabRouter())
+  }
+}
 
-/*
- TabView(AppCoordinator.self)
+enum TabRoute: Route, CaseIterable {
+  case services
+  case menu
+}
 
- init(...) {
-   @Coordinator(...) var coordinator
-   @Bindable var ...
-
-   self.init(selection: $coordinator.selection) {
-     ForEach(coordinator.tabs) { route in
-       coordinator.router.destination(for: route)
-         .coordinator(coordinator) ?? (Present always on the main app coordinator?)
-         .tag(route)
-     }
-   }
- }
- */
+struct TabRouter: Router {
+  @ViewBuilder
+  func destination(for route: TabRoute) -> some View {
+    switch route {
+    case .services:
+      NavigationStack(ServicesCoordinator.self)
+      
+    case .menu:
+      NavigationStack(MenuCoordinator.self)
+    }
+  }
+}

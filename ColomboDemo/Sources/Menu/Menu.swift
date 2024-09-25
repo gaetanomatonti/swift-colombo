@@ -39,7 +39,7 @@ struct MenuHome: View {
 
       Section("Tab") {
         Button("Services") {
-          appCoordinator.select(ServicesCoordinator.self)
+          appCoordinator.select(.services)
         }
       }
     }
