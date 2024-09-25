@@ -14,12 +14,3 @@ public protocol Router {
   @ViewBuilder
   func destination(for route: Route) -> Destination
 }
-
-@MainActor
-extension Router {
-  @ViewBuilder
-  func destinationWithRoute(for route: Route) -> some View {
-    destination(for: route)
-      .environment(\.route, route)
-  }
-}

@@ -74,14 +74,14 @@ struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifi
 
       content
         .sheet(item: sheetPresentation) { presentation in
-          CoordinatedNavigationView<PresentedCoordinator, Router>()
+          NavigationStack(PresentedCoordinator.self)
             .presentationCornerRadius(presentation.style.cornerRadius)
             .presentationDetents(presentation.style.presentationDetents)
             .presentationDragIndicator(presentation.style.dragIndicatorVisibility)
             .interactiveDismissDisabled(presentation.style.isInteractiveDismissDisabled)
         }
         .fullScreenCover(item: fullScreenCoverPresentation) { _ in
-          CoordinatedNavigationView<PresentedCoordinator, Router>()
+          NavigationStack(PresentedCoordinator.self)
         }
     } else {
       content

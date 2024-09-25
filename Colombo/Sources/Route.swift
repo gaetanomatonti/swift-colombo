@@ -6,11 +6,20 @@ import UIKit
 public protocol Route: Hashable {}
 
 extension EnvironmentValues {
-  @Entry var route: (any Route)? = nil
+  @Entry var route: AnyRoute? = nil
 }
 
 extension View {
   func route<R>(_ route: R) -> some View where R: Route {
-    environment(\.route, route)
+    modifier(RouteModifier(route: route))
+  }
+}
+
+struct RouteModifier<R: Route>: ViewModifier {
+  let route: R
+  
+  func body(content: Content) -> some View {
+    content
+      .environment(\.route, AnyRoute(route: route))
   }
 }
