@@ -2,11 +2,23 @@ import SwiftUI
 
 @MainActor
 public protocol NavigationCoordinatorProtocol: CoordinatorProtocol {
-  associatedtype Route: Colombo.Route
+  associatedtype Router: Colombo.Router
   
-  var root: Route { get }
+  /// The root of the navigation.
+  var root: Router.Route { get }
   
-  var path: Stack<Route> { get }
+  /// The path of the navigation stack.
+  var path: Stack<Router.Route> { get }
+  
+  /// The router that defines the destinations of the navigation.
+  var router: Router { get }
+}
+
+extension NavigationCoordinatorProtocol {
+  /// Peeks the top element of the `path`.
+  func peekRoute() -> Router.Route? {
+    path.last
+  }
 }
 
 /// A protocol that defines requirements for an object that coordinates flow navigation.
@@ -16,17 +28,10 @@ open class NavigationCoordinator<Router>: PresentationCoordinator, NavigationCoo
   
   // MARK: - Stored Properties
   
-  /// The path of the navigation stack. Use this property as a binding for the `NavigationStack`.
-  internal(set) public var path: Stack<Route> {
-    didSet {
-      print(path)
-    }
-  }
-
-  /// The root of the navigation.
+  internal(set) public var path: Stack<Route>
+  
   private(set) public var root: Route
 
-  /// The router that defines the destinations of the navigation.
   private(set) public var router: Router
 
   // MARK: - Init

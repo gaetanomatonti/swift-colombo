@@ -6,6 +6,7 @@ struct ServicesRouter: Router {
     switch route {
     case .home:
       ServicesHome()
+        .presentationDestination(RegistrationCoordinator.self)
     }
   }
 }

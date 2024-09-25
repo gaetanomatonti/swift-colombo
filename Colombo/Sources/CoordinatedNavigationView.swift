@@ -59,10 +59,10 @@ public struct CoordinatedNavigationContent<NavigationCoordinator, Router>: View 
 }
 
 @MainActor
-public extension NavigationStack where Data == NavigationPath {
+public extension NavigationStack {
   init<NavigationCoordinator: Colombo.NavigationCoordinator<Router>, Router: Colombo.Router>(
     _ coordinator: NavigationCoordinator.Type
-  ) where Root == CoordinatedNavigationContent<NavigationCoordinator, Router> {
+  ) where Data == Stack<Router.Route>, Root == CoordinatedNavigationContent<NavigationCoordinator, Router> {
     @Coordinator(NavigationCoordinator.self) var navigationCoordinator
     @Bindable var coordinator = navigationCoordinator
     

@@ -53,12 +53,12 @@ struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifi
     let presentedIdentifierMatchesPresentation = PresentedCoordinator.id == presentation.coordinatorID
     
     if let navigationCoordinator = presentingCoordinator as? (any NavigationCoordinatorProtocol) {
-      if navigationCoordinator.path.isEmpty {
+      if let lastRoute = navigationCoordinator.peekRoute() {
+        let isLastRouteInStack = lastRoute.hashValue == route.hashValue
+        return isLastRouteInStack && presentedIdentifierMatchesPresentation
+      } else {
         let isRoot = navigationCoordinator.root.hashValue == route.hashValue
         return isRoot && presentedIdentifierMatchesPresentation
-      } else {
-        let isLastRouteInStack = true // check stack, navigationCoordinator.path.peek().hashValue == route.hashValue
-        return isLastRouteInStack && presentedIdentifierMatchesPresentation
       }
     }
 
