@@ -1,8 +1,17 @@
 import SwiftUI
 
+@MainActor
+public protocol NavigationCoordinatorProtocol: CoordinatorProtocol {
+  associatedtype Route: Colombo.Route
+  
+  var root: Route { get }
+  
+  var path: NavigationPath { get }
+}
+
 /// A protocol that defines requirements for an object that coordinates flow navigation.
 @Observable
-open class NavigationCoordinator<Router>: PresentationCoordinator where Router: Colombo.Router {
+open class NavigationCoordinator<Router>: PresentationCoordinator, NavigationCoordinatorProtocol where Router: Colombo.Router {
 
   public typealias Route = Router.Route
 

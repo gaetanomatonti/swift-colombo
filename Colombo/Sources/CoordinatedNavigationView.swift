@@ -50,9 +50,9 @@ public struct CoordinatedNavigationContent<NavigationCoordinator, Router>: View 
   @Coordinator(NavigationCoordinator.self) var coordinator
 
   public var body: some View {
-    coordinator.router.destination(for: coordinator.root)
+    coordinator.router.destinationWithRoute(for: coordinator.root)
       .navigationDestination(for: NavigationCoordinator.Route.self) { route in
-        coordinator.router.destination(for: route)
+        coordinator.router.destinationWithRoute(for: route)
       }
       .coordinator(NavigationCoordinator.self)
   }

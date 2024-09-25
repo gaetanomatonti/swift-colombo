@@ -16,7 +16,6 @@ struct ColomboDemoApp: App {
     WindowGroup {
       TabView(selection: $coordinator.selection) {
         NavigationStack(ServicesCoordinator.self)
-          .presentationDestination(RegistrationCoordinator.self)
           .coordinator(ServicesCoordinator.self)
           .tabItem {
             Label("Services", systemImage: "mappin.and.ellipse")
@@ -24,7 +23,6 @@ struct ColomboDemoApp: App {
           .tag(ServicesCoordinator.id)
 
         NavigationStack(MenuCoordinator.self)
-          .presentationDestination(RegistrationCoordinator.self)
           .coordinator(MenuCoordinator.self)
           .tabItem {
             Label("Menu", systemImage: "line.3.horizontal")
