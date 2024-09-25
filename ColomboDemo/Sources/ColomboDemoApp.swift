@@ -15,21 +15,21 @@ struct ColomboDemoApp: App {
     
     WindowGroup {
       TabView(selection: $coordinator.selection) {
-        CoordinatedTabView(ServicesCoordinator.self) { view in
-          view
-            .presentationDestination(RegistrationCoordinator.self)
-        }
-        .tabItem {
-          Label("Services", systemImage: "mappin.and.ellipse")
-        }
+        NavigationStack(ServicesCoordinator.self)
+          .presentationDestination(RegistrationCoordinator.self)
+          .coordinator(ServicesCoordinator.self)
+          .tabItem {
+            Label("Services", systemImage: "mappin.and.ellipse")
+          }
+          .tag(ServicesCoordinator.id)
 
-        CoordinatedTabView(MenuCoordinator.self) { view in
-          view
-            .presentationDestination(RegistrationCoordinator.self)
-        }
-        .tabItem {
-          Label("Menu", systemImage: "line.3.horizontal")
-        }
+        NavigationStack(MenuCoordinator.self)
+          .presentationDestination(RegistrationCoordinator.self)
+          .coordinator(MenuCoordinator.self)
+          .tabItem {
+            Label("Menu", systemImage: "line.3.horizontal")
+          }
+          .tag(MenuCoordinator.id)
       }
     }
   }
@@ -37,3 +37,20 @@ struct ColomboDemoApp: App {
 
 @Observable
 final class AppCoordinator: TabCoordinator {}
+
+/*
+ TabView(AppCoordinator.self)
+
+ init(...) {
+   @Coordinator(...) var coordinator
+   @Bindable var ...
+
+   self.init(selection: $coordinator.selection) {
+     ForEach(coordinator.tabs) { route in
+       coordinator.router.destination(for: route)
+         .coordinator(coordinator) ?? (Present always on the main app coordinator?)
+         .tag(route)
+     }
+   }
+ }
+ */

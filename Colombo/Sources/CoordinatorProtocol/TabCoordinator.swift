@@ -9,6 +9,7 @@ open class TabCoordinator: PresentationCoordinator {
   /// The coordinator set as tabs.
   #warning("Change into an ordered set.")
   var tabs: [ObjectIdentifier]
+  #warning("Change into Route and use Router to automate the content of TabView?")
 
   /// The identifier of the selected coordinator.
   #warning("Fix selection when building with Xcode 15.")
