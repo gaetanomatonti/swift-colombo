@@ -1,6 +1,7 @@
 import SwiftUI
 
 /// A view modifier that controls the presentation of a coordinator.
+@MainActor
 struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifier where Router: Colombo.Router, PresentedCoordinator: NavigationCoordinator<Router> {
 
   // MARK: - Computed Properties
@@ -8,7 +9,7 @@ struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifi
   @Environment(\.presentationCoordinator) var presentingCoordinator
   
   @Environment(\.route) var route
-  
+
   private var sheetPresentation: Binding<Presentation?> {
     Binding {
       guard canPresent else {
