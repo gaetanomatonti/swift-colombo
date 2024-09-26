@@ -82,11 +82,13 @@ struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifi
             .presentationDetents(presentation.style.presentationDetents)
             .presentationDragIndicator(presentation.style.dragIndicatorVisibility)
             .interactiveDismissDisabled(presentation.style.isInteractiveDismissDisabled)
+            .environment(\.dismissPresentation, DismissPresentationAction { presentingCoordinator.dismiss() })
         }
         .fullScreenCover(item: fullScreenCoverPresentation) {
           presentingCoordinator.onDismiss()
         } content: { _ in
           NavigationStack(PresentedCoordinator.self)
+            .environment(\.dismissPresentation, DismissPresentationAction { presentingCoordinator.dismiss() })
         }
     } else {
       content

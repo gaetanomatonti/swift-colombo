@@ -51,11 +51,11 @@ open class PresentationCoordinator: CoordinatorProtocol {
 
   /// Dismisses any coordinators presented on top of the current navigation flow.
   public func dismiss() {
-    guard let currentPresentation = presentation else {
+    guard presentation != nil else {
+      logger.warning("Attempted to dismiss a presentation that doesn't exist.")
       return
     }
 
-    dismiss(from: currentPresentation)
     presentation = nil
   }
 
