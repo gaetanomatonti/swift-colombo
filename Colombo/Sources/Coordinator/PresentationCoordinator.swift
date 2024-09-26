@@ -66,18 +66,10 @@ open class PresentationCoordinator: CoordinatorProtocol {
       return
     }
 
-    dismiss(from: _oldPresentation)
-    presentation = nil
+    CoordinatorStorage.shared.remove(_oldPresentation.coordinatorID)
+    self._oldPresentation = nil
 
     logger.info("Completed dismiss for presentation \(_oldPresentation.id, privacy: .public)")
-  }
-
-  /// Dismisses the coordinator in the current presentation.
-  /// - Parameter presentation: The presentation of the coordinator.
-  private func dismiss(from presentation: Presentation) {
-    CoordinatorStorage.shared.remove(presentation.coordinatorID)
-
-    logger.info("Dismissed presentation \(presentation.id, privacy: .public)")
   }
 }
 
