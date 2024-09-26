@@ -53,17 +53,17 @@ struct PresentationDestinationModifier<PresentedCoordinator, Router>: ViewModifi
     
     let presentedIdentifierMatchesPresentation = PresentedCoordinator.id == presentation.coordinatorID
     
-    if let navigationCoordinator = presentingCoordinator as? (any NavigationCoordinatorProtocol) {
-      if let lastRoute = navigationCoordinator.peekRoute() {
-        let isLastRouteInStack = lastRoute.hashValue == route.hashValue
-        return isLastRouteInStack && presentedIdentifierMatchesPresentation
-      } else {
-        let isRoot = navigationCoordinator.root.hashValue == route.hashValue
-        return isRoot && presentedIdentifierMatchesPresentation
-      }
+    guard let navigationCoordinator = presentingCoordinator as? (any NavigationCoordinatorProtocol) else {
+      return presentedIdentifierMatchesPresentation
     }
-
-    return presentedIdentifierMatchesPresentation
+    
+    if let lastRoute = navigationCoordinator.peekRoute() {
+      let isLastRouteInStack = lastRoute.hashValue == route.hashValue
+      return isLastRouteInStack && presentedIdentifierMatchesPresentation
+    } else {
+      let isRoot = navigationCoordinator.root.hashValue == route.hashValue
+      return isRoot && presentedIdentifierMatchesPresentation
+    }
   }
 
   // MARK: - Body
