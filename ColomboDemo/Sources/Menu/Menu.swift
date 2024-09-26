@@ -39,7 +39,7 @@ struct MenuHome: View {
 
       Section("Tab") {
         Button("Services") {
-          appCoordinator.select(ServicesCoordinator.self)
+          appCoordinator.select(.services)
         }
       }
     }
@@ -47,8 +47,19 @@ struct MenuHome: View {
 }
 
 struct MenuSupport: View {
+  @Coordinator(MenuCoordinator.self) var coordinator
+
   var body: some View {
-    Text("Support")
+    VStack {
+      Text("Support")
+
+      Button("Registration") {
+        coordinator.present(
+          RegistrationCoordinator(),
+          presentationStyle: .sheet
+        )
+      }
+    }
   }
 }
 

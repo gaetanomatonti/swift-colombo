@@ -1,6 +1,8 @@
 import Foundation
 
 /// A property wrapper that can read and write a coordinator object in shared storage.
+///
+/// Use this property wrapper to add a coordinator in the shared storage, or read a coordinator instance.
 @propertyWrapper
 @MainActor
 public struct Coordinator<Value> where Value: CoordinatorProtocol {

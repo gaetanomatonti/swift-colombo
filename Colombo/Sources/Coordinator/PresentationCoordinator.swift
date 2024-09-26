@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 import SwiftUI
 
 /// A coordinator that is capable of presenting another coordinator.
@@ -11,10 +12,25 @@ open class PresentationCoordinator: CoordinatorProtocol {
   internal(set) public var presentation: Presentation? {
     didSet {
       if let oldValue, presentation == nil {
-        dismiss(from: oldValue)
+        // Store the old value in a property when the current value is set to `nil`.
+        _oldPresentation = oldValue
       }
     }
   }
+
+  /// A copy of the old presentation value.
+  ///
+  /// Because of some issues with SwiftUI, this property is needed to properly handle the dismissal of sheets.
+  ///
+  /// When the content of a `sheet()` is contained in a `NavigationStack`, SwiftUI may set the value of the presentation `Binding` to `nil` **immediately** when the `dismiss()` action is called on the content view.
+  /// Specifically, this happens when a navigation has occurred (i.e.: pushed another view) and a dismiss is attempted.
+  ///
+  /// To prevent the coordinator from clearing the presented coordinator from storage **before** the view is actually dismissed (since it could be redrawn, and may need access to its coordinator),
+  /// we save a copy of the old value of the presentation.
+  /// This allows us to call a method from the `onDismiss` callback of the `.sheet()` modifier, and properly dispose of the presented coordinator.
+  private var _oldPresentation: Presentation?
+
+  private let logger = Logger(subsystem: "com.gaetanomatonti.swift-colombo", category: "Presentation Coordinator")
 
   // MARK: - Init
 
@@ -35,18 +51,25 @@ open class PresentationCoordinator: CoordinatorProtocol {
 
   /// Dismisses any coordinators presented on top of the current navigation flow.
   public func dismiss() {
-    guard let presentation else {
+    guard presentation != nil else {
+      logger.warning("Attempted to dismiss a presentation that doesn't exist.")
       return
     }
 
-    CoordinatorStorage.shared.remove(presentation.coordinatorID)
-    self.presentation = nil
+    presentation = nil
   }
 
-  /// Dismisses the coordinator in the current presentation.
-  /// - Parameter presentation: The presentation of the coordinator.
-  private func dismiss(from presentation: Presentation) {
-    CoordinatorStorage.shared.remove(presentation.coordinatorID)
+  /// The action to execute when the dismiss of a presentation is complete.
+  func onDismiss() {
+    guard let _oldPresentation else {
+      logger.warning("Expected to complete the dismiss for a presentation, but a copy of the old value is not available.")
+      return
+    }
+
+    CoordinatorStorage.shared.remove(_oldPresentation.coordinatorID)
+    self._oldPresentation = nil
+
+    logger.info("Completed dismiss for presentation \(_oldPresentation.id, privacy: .public)")
   }
 }
 

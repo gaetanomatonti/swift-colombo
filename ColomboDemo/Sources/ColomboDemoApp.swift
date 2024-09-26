@@ -4,36 +4,14 @@ import SwiftUI
 @main
 struct ColomboDemoApp: App {
   @RootCoordinator private var coordinator = AppCoordinator()
+  
+  @Coordinator private var servicesCoordinator = ServicesCoordinator()
 
-  init() {
-    coordinator.register(ServicesCoordinator())
-    coordinator.register(MenuCoordinator())
-  }
+  @Coordinator private var menuCoordinator = MenuCoordinator()
 
   var body: some Scene {
-    @Bindable var coordinator = coordinator
-    
     WindowGroup {
-      TabView(selection: $coordinator.selection) {
-        CoordinatedTabView(ServicesCoordinator.self) { view in
-          view
-            .presentationDestination(RegistrationCoordinator.self)
-        }
-        .tabItem {
-          Label("Services", systemImage: "mappin.and.ellipse")
-        }
-
-        CoordinatedTabView(MenuCoordinator.self) { view in
-          view
-            .presentationDestination(RegistrationCoordinator.self)
-        }
-        .tabItem {
-          Label("Menu", systemImage: "line.3.horizontal")
-        }
-      }
+      TabView(AppCoordinator.self)
     }
   }
 }
-
-@Observable
-final class AppCoordinator: TabCoordinator {}

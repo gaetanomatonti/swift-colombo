@@ -7,9 +7,11 @@ struct MenuRouter: Router {
     switch route {
     case .home:
       MenuHome()
+        .presentationDestination(RegistrationCoordinator.self)
 
     case .support:
       MenuSupport()
+        .presentationDestination(RegistrationCoordinator.self)
 
     case let .profile(username):
       MenuProfile(username: username)

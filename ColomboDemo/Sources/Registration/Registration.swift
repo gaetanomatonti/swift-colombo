@@ -26,7 +26,17 @@ struct RegistrationEntry: View {
 }
 
 struct RegistrationPersonalData: View {
+  @Environment(\.dismissPresentation) var dismiss
+
   var body: some View {
     Text("Personal Data")
+      .toolbar {
+        ToolbarItem(placement: .primaryAction) {
+          Button("Done") {
+            dismiss()
+          }
+          .bold()
+        }
+      }
   }
 }
